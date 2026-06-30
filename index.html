@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NSAT Funnel Dashboard</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>NSAT Funnel Dashboard</h1>
+        <p>Live from OVERALL DATA. Paid is based on Altius user_stage = Block Fee Paid.</p>
+      </div>
+      <div class="header-actions">
+        <span id="refreshStamp">Loading...</span>
+        <button id="refreshBtn" type="button">Refresh</button>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Dashboard views">
+      <button class="tab is-active" data-view="overview" type="button">Overview</button>
+      <button class="tab" data-view="campus" type="button">Campus</button>
+      <button class="tab" data-view="outcomes" type="button">Outcomes</button>
+      <button class="tab" data-view="paid" type="button">Paid</button>
+      <button class="tab" data-view="explorer" type="button">Data Explorer</button>
+    </nav>
+
+    <main>
+      <section id="overview" class="view is-active">
+        <div id="kpis" class="kpi-grid"></div>
+        <div class="dashboard-grid">
+          <section class="panel wide">
+            <div class="panel-heading"><h2>Funnel</h2><span>Stage counts and conversion</span></div>
+            <div id="funnelBars" class="funnel"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><h2>Stage Counts</h2><span>Students by stage</span></div>
+            <canvas id="stageChart"></canvas>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><h2>Conversion Line</h2><span>Step-to-step movement</span></div>
+            <canvas id="conversionChart"></canvas>
+          </section>
+          <section class="panel wide">
+            <div class="panel-heading"><h2>Major Leakage</h2><span>Queues that need action</span></div>
+            <div id="leakageTable"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="campus" class="view">
+        <div class="dashboard-grid">
+          <section class="panel wide">
+            <div class="panel-heading"><h2>Campus Breakdown</h2><span>Registrations, counselling, OL and paid</span></div>
+            <div id="campusTable"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><h2>Paid by Campus</h2><span>Block Fee Paid users</span></div>
+            <canvas id="campusPaidChart"></canvas>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><h2>Campus Conversions</h2><span>Paid / registered</span></div>
+            <canvas id="campusRateChart"></canvas>
+          </section>
+        </div>
+      </section>
+
+      <section id="outcomes" class="view">
+        <div class="dashboard-grid">
+          <section class="panel wide">
+            <div class="panel-heading"><h2>Action Queues</h2><span>Operational follow-up buckets</span></div>
+            <div id="outcomeTable"></div>
+          </section>
+          <section class="panel wide">
+            <div class="panel-heading"><h2>Queue Size</h2><span>Largest recovery opportunities</span></div>
+            <canvas id="outcomeChart"></canvas>
+          </section>
+        </div>
+      </section>
+
+      <section id="paid" class="view">
+        <div class="dashboard-grid">
+          <section class="panel">
+            <div class="panel-heading"><h2>Paid Definition</h2><span>Altius user_stage</span></div>
+            <div id="paidMetrics"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><h2>Paid Share</h2><span>Campus mix</span></div>
+            <canvas id="paidPieChart"></canvas>
+          </section>
+          <section class="panel wide">
+            <div class="panel-heading"><h2>Paid Student Sample</h2><span>Filtered from Data Paid Altius</span></div>
+            <div id="paidSample"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="explorer" class="view">
+        <section class="panel wide">
+          <div class="panel-heading"><h2>Data Explorer</h2><span>Search outcome-level student rows</span></div>
+          <div class="filters">
+            <label>Outcome<select id="datasetSelect"></select></label>
+            <label>Search<input id="searchInput" type="search" placeholder="Name, email, user id, campus..." /></label>
+            <label>Campus/status contains<input id="statusInput" type="search" placeholder="RU, Failed, Present..." /></label>
+            <button id="clearFilters" type="button">Clear</button>
+          </div>
+          <div id="explorerMeta" class="meta-line"></div>
+          <div id="explorerTable"></div>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
